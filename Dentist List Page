@@ -1,0 +1,29 @@
+import { useEffect, useState } from "react";
+
+function DentistList() {
+  const [dentists, setDentists] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/dentists")
+      .then(res => res.json())
+      .then(data => setDentists(data));
+  }, []);
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {dentists.map(d => (
+        <div className="p-4 shadow rounded bg-white">
+          <img src={d.photo} className="h-40 w-full object-cover"/>
+          <h2>{d.name}</h2>
+          <p>{d.qualification}</p>
+          <p>{d.experience} years</p>
+          <button className="bg-blue-500 text-white p-2 mt-2">
+            Book Appointment
+          </button>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default DentistList;
