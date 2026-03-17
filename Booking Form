@@ -1,0 +1,29 @@
+function BookingForm({ dentistId }) {
+  const [form, setForm] = useState({
+    patientName: "",
+    age: "",
+    gender: "",
+    appointmentDate: ""
+  });
+
+  const handleSubmit = async () => {
+    await fetch("http://localhost:5000/api/appointments", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ ...form, dentistId })
+    });
+
+    alert("Appointment Booked!");
+  };
+
+  return (
+    <div>
+      <input placeholder="Name" onChange={e => setForm({...form, patientName:e.target.value})}/>
+      <input placeholder="Age" onChange={e => setForm({...form, age:e.target.value})}/>
+      <input placeholder="Gender" onChange={e => setForm({...form, gender:e.target.value})}/>
+      <input type="date" onChange={e => setForm({...form, appointmentDate:e.target.value})}/>
+      
+      <button onClick={handleSubmit}>Submit</button>
+    </div>
+  );
+}
