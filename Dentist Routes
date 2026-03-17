@@ -1,0 +1,17 @@
+const router = require("express").Router();
+const Dentist = require("../models/Dentist");
+
+// GET all dentists
+router.get("/", async (req, res) => {
+  const dentists = await Dentist.find();
+  res.json(dentists);
+});
+
+// POST dentist
+router.post("/", async (req, res) => {
+  const newDentist = new Dentist(req.body);
+  await newDentist.save();
+  res.json(newDentist);
+});
+
+module.exports = router;
